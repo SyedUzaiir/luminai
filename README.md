@@ -87,3 +87,10 @@ You will see a main **Search Bar**. Try typing the following exact phrases to se
 - **Result:** Automatically selects the `User` collection and filters by `role: "Admin"`.
 
 Watch as the **MQL Query Preview** box updates in real-time to show you _exactly_ what query was sent to MongoDB behind the scenes!
+
+## 👥 Project Team
+
+- **[Uzair](https://github.com/SyedUzaiir)** – Team Lead, Backend Development, Database
+- [Chokkarapuwar Sujal](https://github.com/Chokkarapuwar-Sujal) – Frontend Development
+- [Nakka Srijith](https://github.com/srijith31) – Natural Language Processing(NLP)
+- [Muddam Pranay](https://github.com/Pranay-hub-cmd) – Testing & Documentation
