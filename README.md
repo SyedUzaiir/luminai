@@ -11,9 +11,9 @@ It accomplishes this entirely **offline and locally**, utilizing an integrated N
 ## 🏗️ Architecture Layers
 This project is built using a microservices architecture, split into three distinct, decoupled modules:
 
-1. **[`/frontend`](./frontend/README.md)**: A modern Glassmorphic React dashboard (Vite + Tailwind CSS).
-2. **[`/backend`](./backend/README.md)**: An Express/Node.js orchestrator that connects to MongoDB and routes queries.
-3. **[`/nlp-service`](./nlp-service/README.md)**: A Python FastAPI application running a local spaCy engine to translate English into valid MQL syntax.
+1. **[`/frontend`](LuminaDB/frontend/README.md)**: A modern Glassmorphic React dashboard (Vite + Tailwind CSS).
+2. **[`/backend`](LuminaDB/backend/README.md)**: An Express/Node.js orchestrator that connects to MongoDB and routes queries.
+3. **[`/nlp-service`](LuminaDB/nlp-service/README.md)**: A Python FastAPI application running a local spaCy engine to translate English into valid MQL syntax.
 
 ---
 
