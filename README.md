@@ -40,9 +40,7 @@ graph TD
 The onboarding dashboard provides quick prompt suggestion chips to help get started instantly.
 ![Dashboard](./screenshots/dashboard_initial.png)
 
-### Query Execution
-Watch the AI analyze and run queries in real-time.
-![Query Execution](./screenshots/query_execution.png)
+
 
 ### Analytics
 Category counts, distributions, and metrics rendered automatically.
