@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
 
 const STEPS = [
-  { id: 0, text: 'Understanding your query...', icon: '🧠' },
+  { id: 0, text: 'Understanding request...', icon: '🧠' },
   { id: 1, text: 'Generating MongoDB Query...', icon: '⚙️' },
-  { id: 2, text: 'Executing against MongoDB...', icon: '☁️' },
+  { id: 2, text: 'Executing query...', icon: '☁️' },
   { id: 3, text: 'Rendering results...', icon: '📊' }
 ];
 
@@ -12,7 +12,7 @@ export default function AILoader() {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
-    const intervals = [400, 800, 1200];
+    const intervals = [900, 1800, 2700];
     const timers = intervals.map((delay, index) => {
       return setTimeout(() => {
         setCurrentStep(index + 1);

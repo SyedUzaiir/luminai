@@ -61,9 +61,13 @@ export default function DataVisualizer({ results, collectionName }) {
 
   if (!chartType || chartData.length === 0) return null;
 
+  const totalValue = chartData.reduce((acc, curr) => acc + curr.value, 0);
+  const showSideList = chartType === 'pie';
+  const hideLegend = chartData.length > 4;
+
   return (
     <div className="bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-200/50 dark:border-slate-700/50 p-5 w-full h-[280px] flex flex-col justify-between transition-all duration-300 hover:shadow-md hover:border-slate-300/80 dark:hover:border-slate-600/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-      <div className="flex items-center gap-2 mb-3 border-b border-slate-200/40 dark:border-slate-700/40 pb-2 transition-colors">
+      <div className="flex items-center gap-2 mb-2 border-b border-slate-200/40 dark:border-slate-700/40 pb-2 transition-colors">
         <div className="bg-purple-500/10 dark:bg-purple-400/10 p-1.5 rounded-lg transition-colors">
            {chartType === 'pie' ? <PieChartIcon className="h-4 w-4 text-purple-600 dark:text-purple-400" /> : <BarChart3 className="h-4 w-4 text-purple-600 dark:text-purple-400" />}
         </div>
@@ -74,42 +78,64 @@ export default function DataVisualizer({ results, collectionName }) {
         </h3>
       </div>
       
-      <div className="h-[180px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          {chartType === 'pie' ? (
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                paddingAngle={5}
-                dataKey="value"
-                nameKey="name"
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip 
-                 formatter={(value) => numericField && categoryField ? [value, `Total ${numericField}`] : [value, 'Count']} 
-                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-              />
-              <Legend verticalAlign="bottom" height={36} />
-            </PieChart>
-          ) : (
-            <BarChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-              <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#64748b' }} tickLine={False} hide={chartData.length > 5} />
-              <YAxis tick={{ fontSize: 12, fill: '#64748b' }} tickLine={False} axisLine={False} />
-              <Tooltip 
-                cursor={{ fill: '#f1f5f9' }} 
-                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-              />
-              <Bar dataKey="value" fill="#3B82F6" radius={[4, 4, 0, 0]} barSize={40} />
-            </BarChart>
-          )}
-        </ResponsiveContainer>
+      <div className="h-[190px] w-full flex items-center gap-4">
+        <div className={showSideList ? "flex-1 h-full" : "w-full h-full"}>
+          <ResponsiveContainer width="100%" height="100%">
+            {chartType === 'pie' ? (
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={45}
+                  outerRadius={65}
+                  paddingAngle={4}
+                  dataKey="value"
+                  nameKey="name"
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                   formatter={(value) => numericField && categoryField ? [value, `Total ${numericField}`] : [value, 'Count']} 
+                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                />
+                {!hideLegend && <Legend verticalAlign="bottom" height={24} iconSize={6} wrapperStyle={{ fontSize: '9px' }} />}
+              </PieChart>
+            ) : (
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+                <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748b' }} tickLine={false} hide={chartData.length > 5} />
+                <YAxis tick={{ fontSize: 10, fill: '#64748b' }} tickLine={false} axisLine={false} />
+                <Tooltip 
+                  cursor={{ fill: '#f1f5f9' }} 
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                />
+                <Bar dataKey="value" fill="#3B82F6" radius={[4, 4, 0, 0]} barSize={25} />
+              </BarChart>
+            )}
+          </ResponsiveContainer>
+        </div>
+
+        {showSideList && (
+          <div className="w-[100px] flex flex-col justify-center gap-1.5 overflow-y-auto max-h-[170px] pr-1 custom-scrollbar text-[10px]">
+            {chartData.slice(0, 5).map((entry, index) => {
+              const pct = totalValue > 0 ? Math.round((entry.value / totalValue) * 100) : 0;
+              return (
+                <div key={index} className="flex items-center justify-between font-bold gap-1 text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-1 truncate">
+                    <span 
+                      className="w-1.5 h-1.5 rounded-full shrink-0" 
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }} 
+                    />
+                    <span className="truncate" title={entry.name}>{entry.name}</span>
+                  </div>
+                  <span className="text-slate-800 dark:text-slate-200 shrink-0 font-extrabold">{pct}%</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
       
     </div>

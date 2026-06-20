@@ -17,15 +17,15 @@ export default function ResultsTable({ mql, results }) {
   const getHeaderInfo = (collection, count) => {
     const col = collection.toLowerCase();
     if (col === 'order') {
-      return { icon: '📦', title: 'Orders', subtitle: `${count} ${count === 1 ? 'Record' : 'Records'} Found` };
+      return { icon: '📦', title: 'Orders', subtitle: `${count} matching ${count === 1 ? 'document' : 'documents'}` };
     }
     if (col === 'user') {
-      return { icon: '👤', title: 'Users', subtitle: `${count} ${count === 1 ? 'Record' : 'Records'} Found` };
+      return { icon: '👤', title: 'Users', subtitle: `${count} matching ${count === 1 ? 'document' : 'documents'}` };
     }
     if (col === 'product') {
-      return { icon: '⚡', title: 'Products', subtitle: `${count} ${count === 1 ? 'Record' : 'Records'} Found` };
+      return { icon: '⚡', title: 'Products', subtitle: `${count} matching ${count === 1 ? 'document' : 'documents'}` };
     }
-    return { icon: '📂', title: collection, subtitle: `${count} ${count === 1 ? 'Record' : 'Records'} Found` };
+    return { icon: '📂', title: collection, subtitle: `${count} matching ${count === 1 ? 'document' : 'documents'}` };
   };
 
   const headerInfo = getHeaderInfo(mql.collection, results.length);
@@ -40,7 +40,7 @@ export default function ResultsTable({ mql, results }) {
             <div className="bg-blue-500/10 dark:bg-blue-400/10 p-1.5 rounded-lg">
               <Code2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
             </div>
-            <h3 className="font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider">MQL Query</h3>
+            <h3 className="font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider">Generated MongoDB Query</h3>
           </div>
           
           <div className="bg-slate-950 rounded-xl p-4 overflow-x-auto text-xs shadow-inner max-h-56 custom-scrollbar">
@@ -63,11 +63,12 @@ export default function ResultsTable({ mql, results }) {
           <div className="p-5 border-b border-slate-200/40 dark:border-slate-700/40 flex flex-row items-center justify-between gap-4 bg-white/30 dark:bg-slate-800/30">
              <div className="flex items-center gap-3">
                 <span className="text-2xl">{headerInfo.icon}</span>
-                <div>
+                <div className="flex items-baseline gap-2.5">
                   <h3 className="font-bold text-base text-slate-900 dark:text-white leading-tight">
                     {headerInfo.title}
                   </h3>
-                  <p className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                  <span className="text-slate-300 dark:text-slate-700 text-sm">•</span>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 font-semibold">
                     {headerInfo.subtitle}
                   </p>
                 </div>
