@@ -25,12 +25,13 @@ def get_nlp():
     global nlp
     import spacy
     if nlp is None:
+        model_name = os.getenv("SPACY_MODEL", "en_core_web_sm")
         try:
-            nlp = spacy.load("en_core_web_sm")
+            nlp = spacy.load(model_name)
         except OSError:
             import spacy.cli
-            spacy.cli.download("en_core_web_sm")
-            nlp = spacy.load("en_core_web_sm")
+            spacy.cli.download(model_name)
+            nlp = spacy.load(model_name)
     return nlp
 
 
@@ -92,7 +93,7 @@ async def translate_query(req: QueryRequest):
 
 @app.get("/health")
 def health_check():
-    return {"status": "OK", "service": "LuminaDB Local NLP (spaCy)"}
+    return {"status": "ok", "service": "nlp"}
 
 if __name__ == "__main__":
     import uvicorn

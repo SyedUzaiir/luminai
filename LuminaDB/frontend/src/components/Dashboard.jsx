@@ -33,7 +33,8 @@ export default function Dashboard() {
     });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/query', { prompt });
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await axios.post(`${apiUrl}/api/query`, { prompt });
       setMql(response.data.mql);
       setResults(response.data.results);
     } catch (err) {

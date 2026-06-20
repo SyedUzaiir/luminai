@@ -1,0 +1,26 @@
+services:
+  # 1. NLP Service (Python FastAPI)
+  - type: web
+    name: luminadb-nlp
+    env: python
+    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_sm
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDirectory: LuminaDB/nlp-service
+    envVars:
+      - key: SPACY_MODEL
+        value: en_core_web_sm
+
+  # 2. Backend Orchestrator (Node.js Express)
+  - type: web
+    name: luminadb-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    rootDirectory: LuminaDB/backend
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false # Prompts user for their MongoDB Atlas connection string
+      - key: NLP_SERVICE_URL
+        sync: false # Prompts user for the deployed NLP service endpoint (e.g., https://luminadb-nlp.onrender.com/translate)

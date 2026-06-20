@@ -15,10 +15,19 @@ const NLP_SERVICE_URL = process.env.NLP_SERVICE_URL || 'http://localhost:8000/tr
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/luminadb';
 
 // Middleware
-app.use(cors());
+const allowedOrigins = ['http://localhost:5173'];
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+app.use(cors({
+  origin: allowedOrigins
+}));
 app.use(express.json());
 
 // Add a test route to verify server is running
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', service: 'backend' });
+});
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'LuminaDB Backend running' });
 });
