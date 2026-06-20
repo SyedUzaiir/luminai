@@ -45,18 +45,18 @@ export default function ExportTools({ results, collectionName }) {
   };
 
   return (
-    <div className="flex gap-3 mt-4 sm:mt-0 justify-end w-full sm:w-auto">
+    <div className="flex gap-2 mt-2 sm:mt-0 justify-end">
       <button 
         onClick={downloadCSV}
-        className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-brand-accent dark:hover:text-blue-400 px-3 py-1.5 rounded-lg transition-colors"
+        className="flex justify-center items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-50/50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1.5 rounded-lg transition-all duration-200 active:scale-95 cursor-pointer"
       >
-        <FileSpreadsheet className="w-3.5 h-3.5" /> Export CSV
+        <span>⬇</span> CSV
       </button>
       <button 
         onClick={downloadJSON}
-        className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-brand-accent dark:hover:text-blue-400 px-3 py-1.5 rounded-lg transition-colors"
+        className="flex justify-center items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-50/50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 shadow-sm hover:bg-white dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1.5 rounded-lg transition-all duration-200 active:scale-95 cursor-pointer"
       >
-        <FileJson className="w-3.5 h-3.5" /> Export JSON
+        <span className="font-mono">{"{}"}</span> JSON
       </button>
     </div>
   );

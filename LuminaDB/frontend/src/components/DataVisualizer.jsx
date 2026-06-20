@@ -8,7 +8,17 @@ import { BarChart3, PieChartIcon } from 'lucide-react';
 const COLORS = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#6366F1'];
 
 export default function DataVisualizer({ results, collectionName }) {
-  if (!results || results.length === 0) return null;
+  if (!results || results.length === 0) {
+    return (
+      <div className="bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-200/50 dark:border-slate-700/50 p-6 flex flex-col justify-center items-center text-center h-[280px] w-full transition-all duration-300">
+        <span className="text-3xl mb-3 animate-pulse">📊</span>
+        <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">Awaiting Data</h4>
+        <p className="text-xs text-slate-400 dark:text-slate-500 max-w-[220px] leading-relaxed">
+          Run a search query to visualize your MongoDB data.
+        </p>
+      </div>
+    );
+  }
 
   // 1. Analyze data to find numeric and categorical fields
   let numericField = null;
@@ -52,19 +62,19 @@ export default function DataVisualizer({ results, collectionName }) {
   if (!chartType || chartData.length === 0) return null;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 mt-6 w-full transition-colors">
-      <div className="flex items-center gap-2 mb-6 border-b border-slate-50 dark:border-slate-700 pb-4 transition-colors">
-        <div className="bg-purple-50 dark:bg-purple-900/30 p-2 rounded-lg transition-colors">
-           {chartType === 'pie' ? <PieChartIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" /> : <BarChart3 className="h-5 w-5 text-purple-600 dark:text-purple-400" />}
+    <div className="bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-200/50 dark:border-slate-700/50 p-5 w-full h-[280px] flex flex-col justify-between transition-all duration-300 hover:shadow-md hover:border-slate-300/80 dark:hover:border-slate-600/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+      <div className="flex items-center gap-2 mb-3 border-b border-slate-200/40 dark:border-slate-700/40 pb-2 transition-colors">
+        <div className="bg-purple-500/10 dark:bg-purple-400/10 p-1.5 rounded-lg transition-colors">
+           {chartType === 'pie' ? <PieChartIcon className="h-4 w-4 text-purple-600 dark:text-purple-400" /> : <BarChart3 className="h-4 w-4 text-purple-600 dark:text-purple-400" />}
         </div>
-        <h3 className="font-semibold text-slate-800 dark:text-slate-200 transition-colors">
+        <h3 className="font-bold text-xs text-slate-700 dark:text-slate-300 transition-colors uppercase tracking-wider">
            {chartType === 'pie' 
              ? `${categoryField} Distribution` 
              : `Top 10 ${numericField} Comparison`}
         </h3>
       </div>
       
-      <div className="h-72 w-full">
+      <div className="h-[180px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           {chartType === 'pie' ? (
             <PieChart>
