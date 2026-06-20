@@ -15,14 +15,29 @@ const NLP_SERVICE_URL = process.env.NLP_SERVICE_URL || 'http://localhost:8000/tr
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/luminadb';
 
 // Middleware
-const allowedOrigins = ['http://localhost:5173'];
-if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
-}
+// Middleware
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-  origin: allowedOrigins
+  origin: function (origin, callback) {
+    // Allow requests with no origin (Postman, curl, health checks)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    console.log("Blocked Origin:", origin);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
 }));
-app.use(express.json());
+
+app.options('*', cors());
 
 // Add a test route to verify server is running
 app.get('/health', (req, res) => {
