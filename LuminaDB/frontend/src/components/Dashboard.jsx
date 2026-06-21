@@ -304,7 +304,7 @@ export default function Dashboard() {
             </a>
             <span>•</span>
             <a 
-              href="https://www.linkedin.com/in/syed-uzair-mohiuddin/" 
+              href="https://www.linkedin.com/in/syeduzairmohiuddin/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
